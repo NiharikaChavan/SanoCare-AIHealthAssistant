@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+Sanocare___AI_Health_Assistant.egg-info/PKG-INFO
+Sanocare___AI_Health_Assistant.egg-info/SOURCES.txt
+Sanocare___AI_Health_Assistant.egg-info/dependency_links.txt
+Sanocare___AI_Health_Assistant.egg-info/top_level.txt
+src/__init__.py
+src/helper.py
+src/prompt.py
