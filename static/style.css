@@ -1,0 +1,136 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.chat {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    height: 700px;
+    border-radius: 20px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #4f46e5, #6366f1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 1.25rem 2rem;
+}
+
+.user_info span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.5px;
+}
+
+.msg_card_body {
+    background: rgba(245, 247, 250, 0.8);
+}
+
+.msg_cotainer {
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 18px 18px 18px 4px;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+    border: 1px solid #e5e7eb;
+    padding: 12px 18px;
+    margin-left: 10px;
+}
+
+.msg_cotainer_send {
+    background: linear-gradient(45deg, #4f46e5, #6366f1);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    padding: 12px 18px;
+    margin-right: 10px;
+}
+
+.type_msg {
+    background: #ffffff !important;
+    border: 2px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 1rem 1.5rem !important;
+    font-size: 1rem;
+    color: #1f2937 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.type_msg:focus {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+
+.send_btn {
+    background: linear-gradient(45deg, #4f46e5, #6366f1) !important;
+    border-radius: 12px !important;
+    padding: 0 1.5rem !important;
+    transition: transform 0.2s ease;
+}
+
+.send_btn:hover {
+    transform: scale(1.05);
+}
+
+.user_img {
+    height: 50px;
+    width: 50px;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user_img_msg {
+    height: 35px;
+    width: 35px;
+    border: 2px solid white;
+}
+
+.online_icon {
+    background-color: #10b981;
+    border: 2px solid white;
+    height: 12px;
+    width: 12px;
+    bottom: 0.1em;
+    right: 0.3em;
+}
+
+.msg_time,
+.msg_time_send {
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Scrollbar styling */
+.msg_card_body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.msg_card_body::-webkit-scrollbar-track {
+    background: rgba(241, 245, 249, 0.5);
+}
+
+.msg_card_body::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 4px;
+}
+
+@media (max-width: 576px) {
+    .card {
+        height: 90vh;
+        border-radius: 0 !important;
+    }
+    
+    .card-header {
+        border-radius: 0 !important;
+    }
+}
