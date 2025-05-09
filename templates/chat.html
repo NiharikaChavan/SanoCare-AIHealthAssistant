@@ -1,81 +1,222 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Chatbot</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
-	</head>
-	
-	
-	<body>
-		<div class="container-fluid h-100">
-			<div class="row justify-content-center h-100">		
-				<div class="col-md-8 col-xl-6 chat">
-					<div class="card">
-						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img">
-									<!-- <img src="https://www.prdistribution.com/spirit/uploads/pressreleases/2019/newsreleases/d83341deb75c4c4f6b113f27b1e42cd8-chatbot-florence-already-helps-thousands-of-patients-to-remember-their-medication.png" class="rounded-circle user_img"> -->
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Sanocare</span>
-									<!--<p>Ask me anything!</p>-->
-								</div>
-							</div>
-						</div>
-						<div id="messageFormeight" class="card-body msg_card_body">
-							
-							
-						</div>
-						<div class="card-footer">
-							<form id="messageArea" class="input-group">
-                                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required/>
-								<div class="input-group-append">
-									<button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<script>
-			$(document).ready(function() {
-				$("#messageArea").on("submit", function(event) {
-					const date = new Date();
-					const hour = date.getHours();
-					const minute = date.getMinutes();
-					const str_time = hour+":"+minute;
-					var rawText = $("#text").val();
-
-					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
-					
-					$("#text").val("");
-					$("#messageFormeight").append(userHtml);
-
-					$.ajax({
-						data: {
-							msg: rawText,	
-						},
-						type: "POST",
-						url: "/get",
-					}).done(function(data) {
-						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
-						$("#messageFormeight").append($.parseHTML(botHtml));
-					});
-					event.preventDefault();
-				});
-			});
-		</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthAssist - Your AI Health Companion</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .category-btn {
+            @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out;
+            @apply hover:shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-50;
+        }
         
-    </body>
+        .category-btn.emergency {
+            @apply bg-red-100 text-red-700 hover:bg-red-200 focus:ring-red-500;
+        }
+        
+        .category-btn.symptoms {
+            @apply bg-green-100 text-green-700 hover:bg-green-200 focus:ring-green-500;
+        }
+        
+        .category-btn.mental {
+            @apply bg-purple-100 text-purple-700 hover:bg-purple-200 focus:ring-purple-500;
+        }
+        
+        .category-btn.lifestyle {
+            @apply bg-yellow-100 text-yellow-700 hover:bg-yellow-200 focus:ring-yellow-500;
+        }
+        
+        .category-btn.general {
+            @apply bg-blue-100 text-blue-700 hover:bg-blue-200 focus:ring-blue-500;
+        }
+        
+        .chat-message {
+            @apply p-4 rounded-lg my-2 max-w-3xl mx-auto;
+        }
+        
+        .chat-message.emergency {
+            @apply border-l-4 border-red-500 bg-red-50;
+        }
+        
+        .chat-message.mental-health {
+            @apply border-l-4 border-purple-500 bg-purple-50;
+        }
+        
+        .chat-message.symptom {
+            @apply border-l-4 border-green-500 bg-green-50;
+        }
+        
+        .chat-message.lifestyle {
+            @apply border-l-4 border-yellow-500 bg-yellow-50;
+        }
+        
+        .chat-message.general {
+            @apply border-l-4 border-blue-500 bg-blue-50;
+        }
+        
+        .category-icon {
+            @apply inline-block mr-2;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">HealthAssist</h1>
+            <p class="text-gray-600">Your AI Health Companion</p>
+        </div>
+
+        <!-- Category Buttons -->
+        <div class="category-buttons flex flex-wrap justify-center gap-4 mb-8">
+            <button class="category-btn emergency" onclick="setCategory('EMERGENCY')">
+                🚨 Emergency
+            </button>
+            <button class="category-btn symptoms" onclick="setCategory('SYMPTOM_DIAGNOSIS')">
+                🔍 Symptom Check
+            </button>
+            <button class="category-btn mental" onclick="setCategory('MENTAL_HEALTH')">
+                💭 Mental Health
+            </button>
+            <button class="category-btn lifestyle" onclick="setCategory('LIFESTYLE')">
+                🌟 Lifestyle
+            </button>
+            <button class="category-btn general" onclick="setCategory('GENERAL_HEALTH')">
+                💊 General Health
+            </button>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div id="chatbox" class="h-96 overflow-y-auto mb-4">
+                <!-- Chat messages will be inserted here -->
+            </div>
+
+            <!-- Input Form -->
+            <form id="chat-form" class="flex gap-4">
+                <input type="text" id="user-input" 
+                       class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="Type your health question here...">
+                <button type="submit" 
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const categoryIcons = {
+            'EMERGENCY': '🚨',
+            'SYMPTOM_DIAGNOSIS': '🔍',
+            'MENTAL_HEALTH': '💭',
+            'LIFESTYLE': '🌟',
+            'GENERAL_HEALTH': '💊',
+            'GENERAL': '💬',
+            'ERROR': '⚠️'
+        };
+
+        const categoryClasses = {
+            'EMERGENCY': 'emergency',
+            'SYMPTOM_DIAGNOSIS': 'symptom',
+            'MENTAL_HEALTH': 'mental-health',
+            'LIFESTYLE': 'lifestyle',
+            'GENERAL_HEALTH': 'general',
+            'GENERAL': 'general',
+            'ERROR': 'emergency'
+        };
+
+        let selectedCategory = null;
+
+        function setCategory(category) {
+            selectedCategory = category;
+            // Highlight selected category button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('ring-2');
+            });
+            document.querySelector(`.category-btn.${categoryClasses[category]}`).classList.add('ring-2');
+            
+            // Update input placeholder based on category
+            const input = document.getElementById('user-input');
+            switch(category) {
+                case 'EMERGENCY':
+                    input.placeholder = "Describe the emergency situation...";
+                    break;
+                case 'SYMPTOM_DIAGNOSIS':
+                    input.placeholder = "Describe your symptoms...";
+                    break;
+                case 'MENTAL_HEALTH':
+                    input.placeholder = "Share how you're feeling...";
+                    break;
+                case 'LIFESTYLE':
+                    input.placeholder = "Ask about diet, exercise, or wellness...";
+                    break;
+                case 'GENERAL_HEALTH':
+                    input.placeholder = "Ask any health-related question...";
+                    break;
+            }
+            input.focus();
+        }
+
+        function addMessage(message, isUser = false, category = 'GENERAL') {
+            const chatbox = document.getElementById('chatbox');
+            const messageDiv = document.createElement('div');
+            
+            messageDiv.className = `chat-message ${categoryClasses[category]} ${isUser ? 'ml-auto' : 'mr-auto'}`;
+            
+            const icon = isUser ? '👤' : categoryIcons[category];
+            const content = message.replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = `
+                <span class="category-icon">${icon}</span>
+                <div class="message-content">${content}</div>
+            `;
+            
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+            
+            try {
+                const response = await fetch('/get', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        msg: message,
+                        category: selectedCategory
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Add AI response with the returned category
+                    addMessage(data.response, false, data.category);
+                } else {
+                    addMessage("I apologize, but I encountered an error. Please try again.", false, 'ERROR');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage("I apologize, but I encountered an error. Please try again.", false, 'ERROR');
+            }
+        });
+
+        // Initialize with General Health category
+        setCategory('GENERAL_HEALTH');
+    </script>
+</body>
 </html>

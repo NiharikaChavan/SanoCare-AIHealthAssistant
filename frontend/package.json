@@ -61,7 +61,11 @@
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
     "vaul": "^0.9.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@react-three/fiber": "^8.15.16",
+    "@react-three/drei": "^9.95.0",
+    "three": "^0.160.0",
+    "@types/three": "^0.160.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

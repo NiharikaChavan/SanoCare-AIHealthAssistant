@@ -6,7 +6,9 @@ import { AuthProvider } from './context/AuthContext';
 import Login from './components/Login';
 import Register from './components/Register';
 import Chat from './components/Chat';
+import Home from './components/Home';
 import NotFound from "./pages/NotFound";
+import HealthVRExperience from './components/HealthVRExperience';
 
 const queryClient = new QueryClient();
 
@@ -17,10 +19,11 @@ function App() {
         <AuthProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Chat />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/vr-health" element={<HealthVRExperience />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

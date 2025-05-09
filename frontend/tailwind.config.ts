@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -96,7 +95,30 @@ export default {
 				'message-appear': {
 					from: { opacity: '0', transform: 'translateY(20px)' },
 					to: { opacity: '1', transform: 'translateY(0)' }
-				}
+				},
+				gradient: {
+					'0%, 100%': {
+						'background-size': '200% 200%',
+						'background-position': 'left center'
+					},
+					'50%': {
+						'background-size': '200% 200%',
+						'background-position': 'right center'
+					},
+				},
+				'spin-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' },
+				},
+				'grid': {
+					'0%': { transform: 'translateY(0)' },
+					'100%': { transform: 'translateY(24px)' },
+				},
+				'helix': {
+					'0%': { transform: 'rotate(0deg) scale(1)', opacity: '0.1' },
+					'50%': { transform: 'rotate(180deg) scale(1.2)', opacity: '0.2' },
+					'100%': { transform: 'rotate(360deg) scale(1)', opacity: '0.1' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -106,7 +128,11 @@ export default {
 				'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
 				'typing': 'typing 3.5s steps(40, end)',
 				'blink': 'blink 1s step-end infinite',
-				'message-appear': 'message-appear 0.5s ease-out forwards'
+				'message-appear': 'message-appear 0.5s ease-out forwards',
+				'gradient': 'gradient 8s ease infinite',
+				'spin-slow': 'spin-slow 20s linear infinite',
+				'grid': 'grid 1s linear infinite',
+				'helix': 'helix 8s ease-in-out infinite',
 			},
 			boxShadow: {
 				'soft': '0 2px 15px rgba(0, 0, 0, 0.05)',
